@@ -37,8 +37,14 @@ export async function setUpAddon() {
     const sidePanelClient = await session.createSidePanelClient();
 
     document.getElementById('start-activity').addEventListener('click', async () => {
+    try {
         await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
-    });
+    } catch (e) {
+        console.error('Failed to start Main Stage:', e);
+        alert('Could not start Main Stage. Try again.');
+    }
+});
+
 }
 
 // Expose globally for SidePanel.html
