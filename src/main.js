@@ -26,6 +26,34 @@
 // }
 
 
+// import { meet } from '@googleworkspace/meet-addons/meet.addons';
+
+// const CLOUD_PROJECT_NUMBER = '591092797616';
+// const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStage.html';
+
+// /** Setup Side Panel client */
+// export async function setUpAddon() {
+//     const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
+//     const sidePanelClient = await session.createSidePanelClient();
+
+//     document.getElementById('start-activity').addEventListener('click', async () => {
+//     try {
+//         await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
+//     } catch (e) {
+//         console.error('Failed to start Main Stage:', e);
+//         alert('Could not start Main Stage. Try again.');
+//     }
+// });
+
+// }
+
+// // Expose globally for SidePanel.html
+// window.meetAddon = {
+//     setUpAddon
+// };
+
+
+
 import { meet } from '@googleworkspace/meet-addons/meet.addons';
 
 const CLOUD_PROJECT_NUMBER = '591092797616';
@@ -37,20 +65,14 @@ export async function setUpAddon() {
     const sidePanelClient = await session.createSidePanelClient();
 
     document.getElementById('start-activity').addEventListener('click', async () => {
-    try {
-        await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
-    } catch (e) {
-        console.error('Failed to start Main Stage:', e);
-        alert('Could not start Main Stage. Try again.');
-    }
-});
-
+        try {
+            await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
+        } catch (e) {
+            console.error('Failed to start Main Stage:', e);
+            alert('Could not start Main Stage. Try again.');
+        }
+    });
 }
 
 // Expose globally for SidePanel.html
-window.meetAddon = {
-    setUpAddon
-};
-
-
-
+window.meetAddon = { setUpAddon };

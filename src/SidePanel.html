@@ -1,4 +1,4 @@
-<!-- src/SidePanel.html -->
+<!-- src/SidePanel.html
 <html>
   <body style="width:100%; height:100%; margin:0;">
     <div>Side Panel</div>
@@ -12,4 +12,21 @@
       });
     </script>
   </body>
+</html> -->
+
+<html>
+  <body style="width:100%; height:100%; margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <div style="margin-bottom: 20px;">Side Panel Demo</div>
+    <button id="start-activity">Launch Main Stage</button>
+
+    <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.meetAddon) {
+          window.meetAddon.setUpAddon();
+        }
+      });
+    </script>
+  </body>
 </html>
+
