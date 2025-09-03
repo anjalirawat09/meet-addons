@@ -1,15 +1,15 @@
 <!-- src/SidePanel.html -->
 <html>
-<body style="width:100%; height:100%; margin:0;">
+  <body style="width:100%; height:100%; margin:0;">
     <div>Side Panel</div>
     <button id="start-activity">Launch Main Stage</button>
 
-    <!-- <script src="../dist/main.bundle.js"></script> -->
     <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
     <script>
-        document.body.onload = () => {
-            meetAddon.setUpAddon();
-        };
+      // Initialize the addon and attach click listener
+      document.addEventListener('DOMContentLoaded', () => {
+        meetAddon.setUpAddon();
+      });
     </script>
-</body>
+  </body>
 </html>
