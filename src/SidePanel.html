@@ -1,0 +1,14 @@
+<!-- src/SidePanel.html -->
+<html>
+<body style="width:100%; height:100%; margin:0;">
+    <div>Side Panel</div>
+    <button id="start-activity">Launch Main Stage</button>
+
+    <script src="../dist/main.bundle.js"></script>
+    <script>
+        document.body.onload = () => {
+            meetAddon.setUpAddon();
+        };
+    </script>
+</body>
+</html>

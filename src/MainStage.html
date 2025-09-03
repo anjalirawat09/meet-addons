@@ -1,0 +1,14 @@
+<!-- src/MainStage.html -->
+<html>
+<body style="width:100%; height:100%; margin:0;">
+    <!-- Embed Django page -->
+    <iframe src="https://dev-employer.botshreyasi.com/login" width="100%" height="600px" style="border:none;"></iframe>
+
+    <script src="../dist/main.bundle.js"></script>
+    <script>
+        document.body.onload = () => {
+            meetAddon.initializeMainStage();
+        };
+    </script>
+</body>
+</html>
