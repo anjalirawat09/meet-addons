@@ -1,3 +1,4 @@
+
 // // src/main.js
 // import { meet } from '@googleworkspace/meet-addons/meet.addons';
 
@@ -24,6 +25,7 @@
 //     await session.createMainStageClient();
 // }
 
+
 import { meet } from '@googleworkspace/meet-addons/meet.addons';
 
 const CLOUD_PROJECT_NUMBER = '591092797616';
@@ -39,4 +41,8 @@ export async function setUpAddon() {
     document.getElementById('start-activity').addEventListener('click', async () => {
         await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
     });
+
 }
+
+
+
