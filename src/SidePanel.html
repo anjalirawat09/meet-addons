@@ -137,32 +137,20 @@
         // Initialize the add-on session
         const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-        // Debug: check the session object
-        console.log("Addon session object:", session);
-
-        // ✅ Attempt to get current user email
-        let currentUserEmail = null;
-        try {
-          // Most recent API exposes session.user.email
-          currentUserEmail = session.user?.email || await session.getUserEmail();
-        } catch (err) {
-          console.error("Error fetching current user email:", err);
-        }
-
-        console.log("Current user email (debug):", currentUserEmail);
-
         // Get meeting info
         const meetingInfo = await sidePanelClient.getMeetingInfo();
         const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
 
+        // Log meeting info
         console.log("Current Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
 
         // Submit Feedback button
         const feedbackBtn = document.getElementById("submit-feedback");
         if (feedbackBtn) {
           feedbackBtn.addEventListener("click", () => {
-            const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}&user=${encodeURIComponent(currentUserEmail || '')}`;
-            console.log("Opening Feedback Form with:", targetUrl);
+            // Redirect directly without user email
+            const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
+            console.log("Redirecting to Feedback Form:", targetUrl);
             window.open(targetUrl, "_blank");
           });
         }
