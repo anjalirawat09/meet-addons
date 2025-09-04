@@ -59,8 +59,14 @@ import { meet } from '@googleworkspace/meet-addons/meet.addons';
 const CLOUD_PROJECT_NUMBER = '591092797616';
 const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStage.html';
 
+/**
+ * Prepares the add-on Side Panel Client, and adds an event to launch the
+ * activity in the main stage when the main button is clicked.
+ */
 export async function setUpAddon() {
-  const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
+  const session = await meet.addon.createAddonSession({
+    cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+  });
   const sidePanelClient = await session.createSidePanelClient();
 
   document.getElementById('start-activity').addEventListener('click', async () => {
@@ -73,7 +79,13 @@ export async function setUpAddon() {
   });
 }
 
+/**
+ * Prepares the add-on Main Stage Client, which signals that the add-on
+ * successfully launched in the main stage.
+ */
 export async function initializeMainStage() {
-  const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
+  const session = await meet.addon.createAddonSession({
+    cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+  });
   await session.createMainStageClient();
 }

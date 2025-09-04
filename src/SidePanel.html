@@ -16,20 +16,19 @@
 
 <html>
   <head>
-    <title>Meet Add-on Side Panel</title>
-  </head>
-  <body style="width:100%; height:100%; margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-    <div style="margin-bottom: 20px;">Side Panel Demo</div>
-    <button id="start-activity">Launch Main Stage</button>
-
-    <!-- ✅ Load the bundled main.js (compiled with webpack) -->
+    <title>Meet add-on Side Panel</title>
+    <!-- ✅ Use bundled file -->
     <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
+  </head>
+  <body style="width: 100%; height: 100%; margin: 0">
+    <div>This is the add-on Side Panel. Only you can see this.</div>
+    <button id="start-activity">Launch Activity in Main Stage.</button>
+
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.meetAddon) {
-          window.meetAddon.setUpAddon(); // ✅ initialize side panel client
-        }
-      });
+      document.body.onload = () => {
+        // ✅ library is exposed as "helloWorld"
+        helloWorld.setUpAddon();
+      };
     </script>
   </body>
 </html>

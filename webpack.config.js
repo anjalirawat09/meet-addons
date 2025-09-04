@@ -6,9 +6,8 @@ module.exports = {
   output: {
     filename: 'main.bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'meetAddon',          // name of global object
-    libraryTarget: 'umd',          // ensure compatibility
-    globalObject: 'this',          // works in browser & Node
+    library: 'helloWorld',   // ✅ Match docs
+    libraryTarget: 'var',    // ✅ export to window.helloWorld
   },
   mode: 'production',
 };
