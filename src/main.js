@@ -59,31 +59,21 @@ import { meet } from '@googleworkspace/meet-addons/meet.addons';
 const CLOUD_PROJECT_NUMBER = '591092797616';
 const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStage.html';
 
-/** Setup Side Panel client */
 export async function setUpAddon() {
-    // ✅ Create Addon session once side panel content is loaded
-    const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
-    const sidePanelClient = await session.createSidePanelClient();
+  const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
+  const sidePanelClient = await session.createSidePanelClient();
 
-    // ✅ Button starts the activity in Main Stage
-    document.getElementById('start-activity').addEventListener('click', async () => {
-        try {
-            await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
-        } catch (e) {
-            console.error('Failed to start Main Stage:', e);
-            alert('Could not start Main Stage. Try again.');
-        }
-    });
+  document.getElementById('start-activity').addEventListener('click', async () => {
+    try {
+      await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
+    } catch (e) {
+      console.error('Failed to start Main Stage:', e);
+      alert('Could not start Main Stage. Try again.');
+    }
+  });
 }
 
-/** Setup Main Stage client */
 export async function initializeMainStage() {
-    //  Must also call createAddonSession here
-    const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
-    //  Tells Meet that main stage is ready
-    await session.createMainStageClient();
+  const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
+  await session.createMainStageClient();
 }
-
-//  Expose globally for both SidePanel.html and MainStage.html
-window.meetAddon = { setUpAddon, initializeMainStage };
-

@@ -29,12 +29,14 @@
     <!-- Load the bundled main.js -->
     <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.meetAddon) {
-          // Signals to Meet that Main Stage is ready
-          window.meetAddon.initializeMainStage();
+        document.addEventListener('DOMContentLoaded', () => {
+        if (window.meetAddon && window.meetAddon.initializeMainStage) {
+            window.meetAddon.initializeMainStage();  // ✅ now works
+        } else {
+        console.error("initializeMainStage not found on meetAddon");
         }
-      });
+    });
     </script>
+
   </body>
 </html>
