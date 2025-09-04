@@ -68,14 +68,15 @@
 
   <script>
     document.body.onload = async () => {
-      // ✅ Get session + client
       const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-      // ✅ Get meeting info (correct method)
+      // ✅ Get meeting info
       const meetingInfo = await sidePanelClient.getMeetingInfo();
-      const meetUrl = meetingInfo.meetingUri;
 
-      console.log("Current Google Meet URL:", meetUrl);
+      // ✅ Construct the Meet URL manually
+      const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
+
+      console.log("Current Google Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
 
       // Passive Referral button
       const passiveBtn = document.getElementById("open-passive");
