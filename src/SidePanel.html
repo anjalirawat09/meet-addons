@@ -134,32 +134,31 @@
 </head>
 
 <body>
-  <!-- Only one button now -->
+  <!-- Feedback Button -->
   <button id="submit-feedback">Submit Feedback</button>
 
   <script>
     document.body.onload = async () => {
+      // Setup session and side panel
       const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-      // ✅ Get meeting info
+      // ✅ Meeting details
       const meetingInfo = await sidePanelClient.getMeetingInfo();
+      console.log("Meeting Info:", meetingInfo);
 
-      // ✅ Get current signed-in user
-      const currentUser = await sidePanelClient.getUser();
-
-      // ✅ Meeting organizer (host)
+      // ✅ Get host/organizer email
       const hostEmail = meetingInfo.organizer?.email;
       console.log("Meeting Host:", hostEmail);
-      console.log("Current User:", currentUser);
 
-      // ✅ Construct Meet URL
-      const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
+      // ✅ Current signed-in user from session
+      const currentUserEmail = session?.user?.email;
+      console.log("Current User:", currentUserEmail);
 
-      // ✅ Button
+      // ✅ Button reference
       const feedbackBtn = document.getElementById("submit-feedback");
 
-      if (currentUser.email !== hostEmail) {
-        // Disable button for attendees
+      // Disable for attendees
+      if (!currentUserEmail || currentUserEmail !== hostEmail) {
         feedbackBtn.disabled = true;
         feedbackBtn.innerText = "Only host can submit feedback";
         return;
@@ -168,6 +167,7 @@
       // ✅ Host-only functionality
       if (feedbackBtn) {
         feedbackBtn.addEventListener("click", () => {
+          const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
           const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
           console.log("Opening Feedback Form with:", targetUrl);
           window.open(targetUrl, "_blank");
