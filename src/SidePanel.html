@@ -35,6 +35,16 @@
 
 alert("Hello");
 
+
+
+    const buttonss = document.querySelectorAll('#start-activity');
+
+    // Loop through and add click event listener
+    buttonss.forEach(button => {
+      button.addEventListener('click', () => {
+        alert(`You clicked: buttonss`);
+      });
+    });
     const buttons = document.querySelectorAll('.VfPpkd-vQzf8d');
 
     // Loop through and add click event listener
