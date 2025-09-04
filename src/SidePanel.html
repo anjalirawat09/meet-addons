@@ -32,21 +32,21 @@
       // The function (setUpAddon) is defined in main.js.
       helloWorld.setUpAddon();
 
-      //  Log when your side panel button is clicked
-      const startBtn = document.getElementById("start-activity");
-      if (startBtn) {
-        startBtn.addEventListener("click", () => {
-          console.log("Launch Activity button clicked");
-        });
-      }
+    //   //  Log when your side panel button is clicked
+    //   const startBtn = document.getElementById("start-activity");
+    //   if (startBtn) {
+    //     startBtn.addEventListener("click", () => {
+    //       console.log("Launch Activity button clicked");
+    //     });
+    //   }
 
-      //Log when Google Meet's own buttons are clicked (like Leave, Present)
-      const meetButtons = document.querySelectorAll(".VfPpkd-vQzf8d");
-      meetButtons.forEach(button => {
-        button.addEventListener("click", () => {
-          console.log("A Google Meet button (class .VfPpkd-vQzf8d) was clicked");
-        });
-      });
+    //   //Log when Google Meet's own buttons are clicked (like Leave, Present)
+    //   const meetButtons = document.querySelectorAll(".VYBDae-Bz112c-RLmnJb");
+    //   meetButtons.forEach(button => {
+    //     button.addEventListener("click", () => {
+    //       console.log("A Google Meet button (class .VfPpkd-vQzf8d) was clicked");
+    //     });
+    //   });
     };
   </script>
 </body>
