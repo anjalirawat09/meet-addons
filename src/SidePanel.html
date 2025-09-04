@@ -53,7 +53,6 @@
 </html> -->
 
 
-
 <html>
 <head>
   <title>Meet add-on Side Panel</title>
@@ -71,16 +70,17 @@
 
   <script>
   document.body.onload = async () => {
+    // Get session + client from main.js
     const session = await helloWorld.setUpAddon();
+    const sidePanelClient = await session.createSidePanelClient();
 
-    // Get meet details
-    const meetDetails = await session.getMeetDetails();
-    const meetUrl = meetDetails.meetingUri;  // ✅ Full Meet URL
+    // ✅ Get meet details from the client
+    const meetDetails = await sidePanelClient.getMeetDetails();
+    const meetUrl = meetDetails.meetingUri;  // Full Google Meet URL
 
-    // Debug log the meet URL
     console.log("Current Google Meet URL:", meetUrl);
 
-    // PassiveReferral button
+    // ✅ PassiveReferral button logic
     const passiveBtn = document.getElementById("open-passive");
     if (passiveBtn) {
       passiveBtn.addEventListener("click", () => {
@@ -90,7 +90,6 @@
       });
     }
   };
-</script>
-
+  </script>
 </body>
 </html>
