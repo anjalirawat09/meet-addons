@@ -16,7 +16,7 @@
 
 
 
-<html>
+<!-- <html>
 <head>
   <title>Meet add-on Side Panel</title>
   <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
@@ -47,6 +47,41 @@
           console.log("A Google Meet button (class .VfPpkd-vQzf8d) was clicked");
         });
       });
+    };
+  </script>
+</body>
+</html> -->
+
+
+
+<html>
+<head>
+  <title>Meet add-on Side Panel</title>
+  <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
+</head>
+
+<body style="width: 100%; height: 100%; margin: 0">
+  <div>This is the add-on Side Panel. Only you can see this.</div>
+  
+  <!-- Existing button -->
+  <button id="start-activity">Launch Activity in Main Stage.</button>
+
+  <!-- ✅ New button -->
+  <button id="open-passive">Open Passive Referral</button>
+
+  <script>
+    document.body.onload = () => {
+      // Initialize addon
+      helloWorld.setUpAddon();
+
+      // Log + handle new button click
+      const passiveBtn = document.getElementById("open-passive");
+      if (passiveBtn) {
+        passiveBtn.addEventListener("click", () => {
+          console.log("Passive Referral button clicked");
+          window.open("https://passivereferral.com/", "_blank"); // ✅ Opens in new tab
+        });
+      }
     };
   </script>
 </body>
