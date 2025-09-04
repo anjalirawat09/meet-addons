@@ -122,8 +122,13 @@
       transition: background 0.3s ease;
     }
 
-    #submit-feedback:hover {
-      background-color: #580b9e; /* Darker purple on hover */
+    #submit-feedback:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    #submit-feedback:hover:enabled {
+      background-color: #580b9e; /* Darker purple */
     }
   </style>
 </head>
@@ -136,16 +141,31 @@
     document.body.onload = async () => {
       const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-      // Get meeting info
+      // ✅ Get meeting info
       const meetingInfo = await sidePanelClient.getMeetingInfo();
 
-      // Construct the Meet URL manually
+      // ✅ Get current signed-in user
+      const currentUser = await sidePanelClient.getUser();
+
+      // ✅ Meeting organizer (host)
+      const hostEmail = meetingInfo.organizer?.email;
+      console.log("Meeting Host:", hostEmail);
+      console.log("Current User:", currentUser);
+
+      // ✅ Construct Meet URL
       const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
 
-      console.log("Current Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
-
-      // Submit Feedback button
+      // ✅ Button
       const feedbackBtn = document.getElementById("submit-feedback");
+
+      if (currentUser.email !== hostEmail) {
+        // Disable button for attendees
+        feedbackBtn.disabled = true;
+        feedbackBtn.innerText = "Only host can submit feedback";
+        return;
+      }
+
+      // ✅ Host-only functionality
       if (feedbackBtn) {
         feedbackBtn.addEventListener("click", () => {
           const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
