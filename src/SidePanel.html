@@ -70,16 +70,15 @@
 
   <script>
   document.body.onload = async () => {
-    // ✅ Get both session + sidePanelClient from main.js
-    const { session, sidePanelClient } = await helloWorld.setUpAddon();
+    // ✅ Now get sidePanelClient directly
+    const sidePanelClient = await helloWorld.setUpAddon();
 
-    // ✅ Get meet details from the client (NOT session)
+    // ✅ Get meet details
     const meetDetails = await sidePanelClient.getMeetDetails();
-    const meetUrl = meetDetails.meetingUri;  // Full Google Meet URL
+    const meetUrl = meetDetails.meetingUri;
 
     console.log("Current Google Meet URL:", meetUrl);
 
-    // ✅ PassiveReferral button logic
     const passiveBtn = document.getElementById("open-passive");
     if (passiveBtn) {
       passiveBtn.addEventListener("click", () => {
