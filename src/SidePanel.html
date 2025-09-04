@@ -25,29 +25,19 @@
   <button id="start-activity">Launch Activity in Main Stage.</button>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Initialize addon
+    document.body.onload = () => {
+      // Library name (helloWorld) is defined in the webpack config.
+      // The function (setUpAddon) is defined in main.js.
       helloWorld.setUpAddon();
 
-      // Log message when page loads
-      console.log("Side Panel loaded");
-
-      // Attach click handler to your button
+      //  Log when button is clicked
       const startBtn = document.getElementById("start-activity");
       if (startBtn) {
         startBtn.addEventListener("click", () => {
-          console.log(" You clicked: Launch Activity button");
+          console.log("Launch Activity button clicked");
         });
       }
-
-      // Example: catch Meet’s own buttons if needed
-      const buttons = document.querySelectorAll(".VfPpkd-vQzf8d");
-      buttons.forEach(button => {
-        button.addEventListener("click", () => {
-          console.log(" You clicked a .VfPpkd-vQzf8d button");
-        });
-      });
-    });
+    };
   </script>
 </body>
 </html>
