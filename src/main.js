@@ -58,7 +58,9 @@ import { meet } from '@googleworkspace/meet-addons/meet.addons';
 
 const CLOUD_PROJECT_NUMBER = '591092797616';
 // const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStage.html';
-const MAIN_STAGE_URL = 'https://dev-employer.botshreyasi.com/login';
+// const MAIN_STAGE_URL = 'https://dev-employer.botshreyasi.com/login';
+const MAIN_STAGE_URL = "https://anjalirawat09.github.io/meet-addons/src/LoginProxy.html";
+
 
 /**
  * Prepares the add-on Side Panel Client, and adds an event to launch the
