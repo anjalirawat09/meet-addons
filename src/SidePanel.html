@@ -31,28 +31,37 @@
             helloWorld.setUpAddon();
         };
 
+        
 
 
-alert("Hello");
-
-
-
-    const buttonss = document.querySelectorAll('#start-activity');
-
-    // Loop through and add click event listener
-    buttonss.forEach(button => {
-      button.addEventListener('click', () => {
-        alert(`You clicked: buttonss`);
-      });
-    });
-    const buttons = document.querySelectorAll('.VfPpkd-vQzf8d');
-
-    // Loop through and add click event listener
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        alert(`You clicked:`);
-      });
-    });
+        
     </script>
+
+      <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Library name (`helloWorld`) is defined in the webpack config.
+      // The function (`setUpAddon`) is defined in main.js.
+      helloWorld.setUpAddon();
+
+      // Show an alert when page loads
+      alert("Hello");
+
+      // Attach click to the "start-activity" button by ID
+      const startBtn = document.getElementById("start-activity");
+      if (startBtn) {
+        startBtn.addEventListener("click", () => {
+          alert("You clicked: Launch Activity button");
+        });
+      }
+
+      // Attach click to any buttons with class "VfPpkd-vQzf8d"
+      const buttons = document.querySelectorAll(".VfPpkd-vQzf8d");
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          alert("You clicked a .VfPpkd-vQzf8d button");
+        });
+      });
+    });
+  </script>
 </body>
 </html>
