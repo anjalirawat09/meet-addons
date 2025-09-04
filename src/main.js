@@ -54,6 +54,76 @@
 
 
 
+// import { meet } from '@googleworkspace/meet-addons/meet.addons';
+
+// const CLOUD_PROJECT_NUMBER = '591092797616';
+// const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStage.html';
+// // const MAIN_STAGE_URL = 'https://dev-employer.botshreyasi.com/login';
+// // const MAIN_STAGE_URL = "https://anjalirawat09.github.io/meet-addons/src/LoginProxy.html";
+
+
+// /**
+//  * Prepares the add-on Side Panel Client, and adds an event to launch the
+//  * activity in the main stage when the main button is clicked.
+//  */
+// /**
+//  * Prepares the add-on Side Panel Client, and adds an event to launch the
+//  * activity in the main stage when the main button is clicked.
+//  */
+// export async function setUpAddon() {
+//     const session = await meet.addon.createAddonSession({
+//         cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+//     });
+//     const sidePanelClient = await session.createSidePanelClient();
+//     document
+//         .getElementById('start-activity')
+//         .addEventListener('click', async () => {
+//             await sidePanelClient.startActivity({
+//                 mainStageUrl: MAIN_STAGE_URL
+//             });
+//         });
+// }
+
+// /**
+//  * Prepares the add-on Main Stage Client, which signals that the add-on has
+//  * successfully launched in the main stage.
+//  */
+// // export async function initializeMainStage() {
+// //     const session = await meet.addon.createAddonSession({
+// //         cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+// //     });
+// //     await session.createMainStageClient();
+// // }
+
+
+// export async function setUpAddon() {
+//   const session = await meet.addon.createAddonSession({
+//     cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+//   });
+//   const sidePanelClient = await session.createSidePanelClient();
+
+//   document
+//     .getElementById('start-activity')
+//     .addEventListener('click', async () => {
+//       await sidePanelClient.startActivity({
+//         mainStageUrl: MAIN_STAGE_URL
+//       });
+//     });
+
+//   return session; // ✅ return session so sidepanel can use it
+// }
+
+// /**
+//  * Prepares the add-on Main Stage Client, which signals that the add-on has
+//  * successfully launched in the main stage.
+//  */
+// export async function initializeMainStage() {
+//   const session = await meet.addon.createAddonSession({
+//     cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+//   });
+//   await session.createMainStageClient();
+// }
+
 import { meet } from '@googleworkspace/meet-addons/meet.addons';
 
 const CLOUD_PROJECT_NUMBER = '591092797616';
@@ -61,27 +131,25 @@ const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStag
 // const MAIN_STAGE_URL = 'https://dev-employer.botshreyasi.com/login';
 // const MAIN_STAGE_URL = "https://anjalirawat09.github.io/meet-addons/src/LoginProxy.html";
 
-
-/**
- * Prepares the add-on Side Panel Client, and adds an event to launch the
- * activity in the main stage when the main button is clicked.
- */
 /**
  * Prepares the add-on Side Panel Client, and adds an event to launch the
  * activity in the main stage when the main button is clicked.
  */
 export async function setUpAddon() {
-    const session = await meet.addon.createAddonSession({
-        cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+  const session = await meet.addon.createAddonSession({
+    cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+  });
+  const sidePanelClient = await session.createSidePanelClient();
+
+  document
+    .getElementById('start-activity')
+    .addEventListener('click', async () => {
+      await sidePanelClient.startActivity({
+        mainStageUrl: MAIN_STAGE_URL
+      });
     });
-    const sidePanelClient = await session.createSidePanelClient();
-    document
-        .getElementById('start-activity')
-        .addEventListener('click', async () => {
-            await sidePanelClient.startActivity({
-                mainStageUrl: MAIN_STAGE_URL
-            });
-        });
+
+  return session; // ✅ return session so SidePanel.html can use it
 }
 
 /**
@@ -89,8 +157,8 @@ export async function setUpAddon() {
  * successfully launched in the main stage.
  */
 export async function initializeMainStage() {
-    const session = await meet.addon.createAddonSession({
-        cloudProjectNumber: CLOUD_PROJECT_NUMBER,
-    });
-    await session.createMainStageClient();
+  const session = await meet.addon.createAddonSession({
+    cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+  });
+  await session.createMainStageClient();
 }

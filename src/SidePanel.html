@@ -70,19 +70,27 @@
   <button id="open-passive">Open Passive Referral</button>
 
   <script>
-    document.body.onload = () => {
-      // Initialize addon
-      helloWorld.setUpAddon();
+  document.body.onload = async () => {
+    const session = await helloWorld.setUpAddon();
 
-      // Log + handle new button click
-      const passiveBtn = document.getElementById("open-passive");
-      if (passiveBtn) {
-        passiveBtn.addEventListener("click", () => {
-          console.log("Passive Referral button clicked");
-          window.open("https://passivereferral.com/", "_blank"); // ✅ Opens in new tab
-        });
-      }
-    };
-  </script>
+    // Get meet details
+    const meetDetails = await session.getMeetDetails();
+    const meetUrl = meetDetails.meetingUri;  // ✅ Full Meet URL
+
+    // Debug log the meet URL
+    console.log("Current Google Meet URL:", meetUrl);
+
+    // PassiveReferral button
+    const passiveBtn = document.getElementById("open-passive");
+    if (passiveBtn) {
+      passiveBtn.addEventListener("click", () => {
+        const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
+        console.log("Opening Passive Referral with:", targetUrl);
+        window.open(targetUrl, "_blank");
+      });
+    }
+  };
+</script>
+
 </body>
 </html>
