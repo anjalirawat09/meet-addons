@@ -63,29 +63,31 @@ const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStag
  * Prepares the add-on Side Panel Client, and adds an event to launch the
  * activity in the main stage when the main button is clicked.
  */
+/**
+ * Prepares the add-on Side Panel Client, and adds an event to launch the
+ * activity in the main stage when the main button is clicked.
+ */
 export async function setUpAddon() {
-  const session = await meet.addon.createAddonSession({
-    cloudProjectNumber: CLOUD_PROJECT_NUMBER,
-  });
-  const sidePanelClient = await session.createSidePanelClient();
-
-  document.getElementById('start-activity').addEventListener('click', async () => {
-    try {
-      await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
-    } catch (e) {
-      console.error('Failed to start Main Stage:', e);
-      alert('Could not start Main Stage. Try again.');
-    }
-  });
+    const session = await meet.addon.createAddonSession({
+        cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+    });
+    const sidePanelClient = await session.createSidePanelClient();
+    document
+        .getElementById('start-activity')
+        .addEventListener('click', async () => {
+            await sidePanelClient.startActivity({
+                mainStageUrl: MAIN_STAGE_URL
+            });
+        });
 }
 
 /**
- * Prepares the add-on Main Stage Client, which signals that the add-on
+ * Prepares the add-on Main Stage Client, which signals that the add-on has
  * successfully launched in the main stage.
  */
 export async function initializeMainStage() {
-  const session = await meet.addon.createAddonSession({
-    cloudProjectNumber: CLOUD_PROJECT_NUMBER,
-  });
-  await session.createMainStageClient();
+    const session = await meet.addon.createAddonSession({
+        cloudProjectNumber: CLOUD_PROJECT_NUMBER,
+    });
+    await session.createMainStageClient();
 }
