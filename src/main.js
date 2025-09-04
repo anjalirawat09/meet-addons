@@ -137,17 +137,21 @@ export async function setUpAddon() {
   const session = await meet.addon.createAddonSession({
     cloudProjectNumber: CLOUD_PROJECT_NUMBER,
   });
+
   const sidePanelClient = await session.createSidePanelClient();
 
-  document
-    .getElementById('start-activity')
-    .addEventListener('click', async () => {
+  // Button inside side panel to launch main stage activity
+  const startBtn = document.getElementById('start-activity');
+  if (startBtn) {
+    startBtn.addEventListener('click', async () => {
       await sidePanelClient.startActivity({
         mainStageUrl: MAIN_STAGE_URL
       });
     });
+  }
 
-  return session; // ✅ returning session so SidePanel.html can use it
+  // ✅ return both session + client so HTML can use them
+  return { session, sidePanelClient };
 }
 
 /**
