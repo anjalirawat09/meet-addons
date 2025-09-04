@@ -134,44 +134,56 @@
 </head>
 
 <body>
-  <!-- Feedback Button -->
   <button id="submit-feedback">Submit Feedback</button>
 
   <script>
     document.body.onload = async () => {
-      // Setup session and side panel
       const { session, sidePanelClient } = await helloWorld.setUpAddon();
-
-      // ✅ Meeting details
-      const meetingInfo = await sidePanelClient.getMeetingInfo();
-      console.log("Meeting Info:", meetingInfo);
-
-      // ✅ Get host/organizer email
-      const hostEmail = meetingInfo.organizer?.email;
-      console.log("Meeting Host:", hostEmail);
-
-      // ✅ Current signed-in user from session
-      const currentUserEmail = session?.user?.email;
-      console.log("Current User:", currentUserEmail);
-
-      // ✅ Button reference
       const feedbackBtn = document.getElementById("submit-feedback");
 
-      // Disable for attendees
-      if (!currentUserEmail || currentUserEmail !== hostEmail) {
+      // Get the event_id from URL query param
+      const urlParams = new URLSearchParams(window.location.search);
+      const eventId = urlParams.get("eventId");
+      if (!eventId) {
         feedbackBtn.disabled = true;
-        feedbackBtn.innerText = "Only host can submit feedback";
+        feedbackBtn.innerText = "Event ID not found";
         return;
       }
 
-      // ✅ Host-only functionality
-      if (feedbackBtn) {
+      try {
+        // Call your Django API to get host and event details
+        const response = await fetch('http://192.168.4.101:8005/meeting/get_meeting_host/', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ event_id: eventId })
+        });
+
+        const data = await response.json();
+        if (!data.organizer_email) {
+          feedbackBtn.disabled = true;
+          feedbackBtn.innerText = "Host info not available";
+          return;
+        }
+
+        const currentUserEmail = session?.user?.email;
+
+        // Disable for attendees
+        if (!currentUserEmail || currentUserEmail !== data.organizer_email) {
+          feedbackBtn.disabled = true;
+          feedbackBtn.innerText = "Only host can submit feedback";
+          return;
+        }
+
+        // Host-only functionality
         feedbackBtn.addEventListener("click", () => {
-          const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
-          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
-          console.log("Opening Feedback Form with:", targetUrl);
+          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(data.hangout_link)}&eventId=${eventId}`;
           window.open(targetUrl, "_blank");
         });
+
+      } catch (err) {
+        console.error("Error fetching host info:", err);
+        feedbackBtn.disabled = true;
+        feedbackBtn.innerText = "Error loading host info";
       }
     };
   </script>
