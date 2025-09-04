@@ -25,5 +25,16 @@
   <body>
     <h1>Welcome to the Main Stage!</h1>
     <p>This content is displayed on the Google Meet Main Stage.</p>
+
+    <!-- Load the bundled main.js -->
+    <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.meetAddon) {
+          // Signals to Meet that Main Stage is ready
+          window.meetAddon.initializeMainStage();
+        }
+      });
+    </script>
   </body>
 </html>

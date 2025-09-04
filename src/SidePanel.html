@@ -15,18 +15,21 @@
 </html> -->
 
 <html>
+  <head>
+    <title>Meet Add-on Side Panel</title>
+  </head>
   <body style="width:100%; height:100%; margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
     <div style="margin-bottom: 20px;">Side Panel Demo</div>
     <button id="start-activity">Launch Main Stage</button>
 
+    <!-- ✅ Load the bundled main.js (compiled with webpack) -->
     <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         if (window.meetAddon) {
-          window.meetAddon.setUpAddon();
+          window.meetAddon.setUpAddon(); // ✅ initialize side panel client
         }
       });
     </script>
   </body>
 </html>
-

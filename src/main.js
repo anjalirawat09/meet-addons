@@ -61,9 +61,11 @@ const MAIN_STAGE_URL = 'https://anjalirawat09.github.io/meet-addons/src/MainStag
 
 /** Setup Side Panel client */
 export async function setUpAddon() {
+    // ✅ Create Addon session once side panel content is loaded
     const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
     const sidePanelClient = await session.createSidePanelClient();
 
+    // ✅ Button starts the activity in Main Stage
     document.getElementById('start-activity').addEventListener('click', async () => {
         try {
             await sidePanelClient.startActivity({ mainStageUrl: MAIN_STAGE_URL });
@@ -74,5 +76,14 @@ export async function setUpAddon() {
     });
 }
 
-// Expose globally for SidePanel.html
-window.meetAddon = { setUpAddon };
+/** Setup Main Stage client */
+export async function initializeMainStage() {
+    //  Must also call createAddonSession here
+    const session = await meet.addon.createAddonSession({ cloudProjectNumber: CLOUD_PROJECT_NUMBER });
+    //  Tells Meet that main stage is ready
+    await session.createMainStageClient();
+}
+
+//  Expose globally for both SidePanel.html and MainStage.html
+window.meetAddon = { setUpAddon, initializeMainStage };
+
