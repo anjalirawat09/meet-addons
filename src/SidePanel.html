@@ -53,7 +53,7 @@
 </html> -->
 
 
-<html>
+<!-- <html>
 <head>
   <title>Meet add-on Side Panel</title>
   <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
@@ -62,7 +62,7 @@
 <body style="width: 100%; height: 100%; margin: 0">
   <div>This is the add-on Side Panel. Only you can see this.</div>
   
-  <!-- Buttons -->
+  Buttons
   <button id="start-activity">Launch Activity in Main Stage</button>
   <button id="open-passive">Open Passive Referral</button>
 
@@ -84,6 +84,72 @@
         passiveBtn.addEventListener("click", () => {
           const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
           console.log("Opening Passive Referral with:", targetUrl);
+          window.open(targetUrl, "_blank");
+        });
+      }
+    };
+  </script>
+</body>
+</html> -->
+
+
+
+
+<html>
+<head>
+  <title>Meet add-on Side Panel</title>
+  <script src="https://anjalirawat09.github.io/meet-addons/dist/main.bundle.js"></script>
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+
+    #submit-feedback {
+      background-color: #6a0dad; /* Purple */
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #submit-feedback:hover {
+      background-color: #580b9e; /* Darker purple on hover */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Only one button now -->
+  <button id="submit-feedback">Submit Feedback</button>
+
+  <script>
+    document.body.onload = async () => {
+      const { session, sidePanelClient } = await helloWorld.setUpAddon();
+
+      // Get meeting info
+      const meetingInfo = await sidePanelClient.getMeetingInfo();
+
+      // Construct the Meet URL manually
+      const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
+
+      console.log("Current Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
+
+      // Submit Feedback button
+      const feedbackBtn = document.getElementById("submit-feedback");
+      if (feedbackBtn) {
+        feedbackBtn.addEventListener("click", () => {
+          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
+          console.log("Opening Feedback Form with:", targetUrl);
           window.open(targetUrl, "_blank");
         });
       }
