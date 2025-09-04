@@ -112,7 +112,7 @@
     }
 
     #submit-feedback {
-      background-color: #6a0dad; /* Purple */
+      background-color: #6a0dad;
       color: white;
       border: none;
       padding: 12px 24px;
@@ -123,35 +123,51 @@
     }
 
     #submit-feedback:hover {
-      background-color: #580b9e; /* Darker purple on hover */
+      background-color: #580b9e;
     }
   </style>
 </head>
 
 <body>
-  <!-- ✅ Only one button now -->
   <button id="submit-feedback">Submit Feedback</button>
 
   <script>
     document.body.onload = async () => {
-      const { session, sidePanelClient } = await helloWorld.setUpAddon();
+      try {
+        // Initialize the add-on session
+        const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-      // ✅ Get meeting info
-      const meetingInfo = await sidePanelClient.getMeetingInfo();
+        // Debug: check the session object
+        console.log("Addon session object:", session);
 
-      // ✅ Construct the Meet URL manually
-      const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
+        // ✅ Attempt to get current user email
+        let currentUserEmail = null;
+        try {
+          // Most recent API exposes session.user.email
+          currentUserEmail = session.user?.email || await session.getUserEmail();
+        } catch (err) {
+          console.error("Error fetching current user email:", err);
+        }
 
-      console.log("Current Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
+        console.log("Current user email (debug):", currentUserEmail);
 
-      // ✅ Submit Feedback button
-      const feedbackBtn = document.getElementById("submit-feedback");
-      if (feedbackBtn) {
-        feedbackBtn.addEventListener("click", () => {
-          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
-          console.log("Opening Feedback Form with:", targetUrl);
-          window.open(targetUrl, "_blank");
-        });
+        // Get meeting info
+        const meetingInfo = await sidePanelClient.getMeetingInfo();
+        const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
+
+        console.log("Current Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
+
+        // Submit Feedback button
+        const feedbackBtn = document.getElementById("submit-feedback");
+        if (feedbackBtn) {
+          feedbackBtn.addEventListener("click", () => {
+            const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}&user=${encodeURIComponent(currentUserEmail || '')}`;
+            console.log("Opening Feedback Form with:", targetUrl);
+            window.open(targetUrl, "_blank");
+          });
+        }
+      } catch (e) {
+        console.error("Error initializing add-on:", e);
       }
     };
   </script>
