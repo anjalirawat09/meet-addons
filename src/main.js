@@ -136,11 +136,10 @@ export async function setUpAddon() {
 
   const sidePanelClient = await session.createSidePanelClient();
 
-  // Expose both in global for debugging
+  // Debug
   window._addonSession = session;
   window._sidePanelClient = sidePanelClient;
 
-  // Button inside side panel to launch main stage activity
   const startBtn = document.getElementById('start-activity');
   if (startBtn) {
     startBtn.addEventListener('click', async () => {
@@ -150,8 +149,8 @@ export async function setUpAddon() {
     });
   }
 
-  // ✅ Return client directly (not wrapped)
-  return sidePanelClient;
+  // ✅ return both
+  return { session, sidePanelClient };
 }
 
 export async function initializeMainStage() {

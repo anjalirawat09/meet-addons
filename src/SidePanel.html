@@ -62,19 +62,16 @@
 <body style="width: 100%; height: 100%; margin: 0">
   <div>This is the add-on Side Panel. Only you can see this.</div>
   
-  <!-- Existing button -->
   <button id="start-activity">Launch Activity in Main Stage</button>
-
-  <!-- ✅ New button -->
   <button id="open-passive">Open Passive Referral</button>
 
   <script>
   document.body.onload = async () => {
-    // ✅ Now get sidePanelClient directly
-    const sidePanelClient = await helloWorld.setUpAddon();
+    // ✅ Destructure session + client
+    const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-    // ✅ Get meet details
-    const meetDetails = await sidePanelClient.getMeetDetails();
+    // ✅ Get meet details from session, not client
+    const meetDetails = await session.getMeetDetails();
     const meetUrl = meetDetails.meetingUri;
 
     console.log("Current Google Meet URL:", meetUrl);
