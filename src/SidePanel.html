@@ -105,85 +105,64 @@
       height: 100%;
       margin: 0;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #f9f9f9;
       font-family: Arial, sans-serif;
     }
 
-    #submit-feedback {
-      background-color: #6a0dad; /* Purple */
-      color: white;
-      border: none;
-      padding: 12px 24px;
+    button {
+      margin: 8px 0;
+      padding: 10px 20px;
       font-size: 16px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
 
     #submit-feedback:disabled {
       background-color: #ccc;
       cursor: not-allowed;
     }
-
-    #submit-feedback:hover:enabled {
-      background-color: #580b9e; /* Darker purple */
-    }
   </style>
 </head>
 
 <body>
+  <div>This is the add-on Side Panel. Only you can see this.</div>
+  
   <button id="submit-feedback">Submit Feedback</button>
-
+  
   <script>
     document.body.onload = async () => {
-      const { session, sidePanelClient } = await helloWorld.setUpAddon();
-      const feedbackBtn = document.getElementById("submit-feedback");
-
-      // Get the event_id from URL query param
-      const urlParams = new URLSearchParams(window.location.search);
-      const eventId = urlParams.get("eventId");
-      if (!eventId) {
-        feedbackBtn.disabled = true;
-        feedbackBtn.innerText = "Event ID not found";
-        return;
-      }
-
       try {
-        // Call your Django API to get host and event details
-        const response = await fetch('http://192.168.4.101:8005/meeting/get_meeting_host/', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ event_id: eventId })
-        });
+        // ✅ Initialize the Meet SDK session and side panel client
+        const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-        const data = await response.json();
-        if (!data.organizer_email) {
+        // ✅ Get meeting info
+        const meetingInfo = await sidePanelClient.getMeetingInfo();
+        const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
+        console.log("Meeting Info:", meetingInfo);
+        console.log("Constructed Meet URL:", meetUrl);
+
+        // ✅ Get current user from session
+        const currentUser = session?.user;  // contains email, displayName, etc.
+        console.log("Current Signed-in User:", currentUser);
+
+        // ✅ Feedback button reference
+        const feedbackBtn = document.getElementById("submit-feedback");
+
+        // Just show current user for now
+        if (currentUser) {
+          feedbackBtn.innerText = `Signed in as: ${currentUser.email}`;
+        } else {
           feedbackBtn.disabled = true;
-          feedbackBtn.innerText = "Host info not available";
-          return;
+          feedbackBtn.innerText = "User info not available";
         }
-
-        const currentUserEmail = session?.user?.email;
-
-        // Disable for attendees
-        if (!currentUserEmail || currentUserEmail !== data.organizer_email) {
-          feedbackBtn.disabled = true;
-          feedbackBtn.innerText = "Only host can submit feedback";
-          return;
-        }
-
-        // Host-only functionality
-        feedbackBtn.addEventListener("click", () => {
-          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(data.hangout_link)}&eventId=${eventId}`;
-          window.open(targetUrl, "_blank");
-        });
 
       } catch (err) {
-        console.error("Error fetching host info:", err);
+        console.error("Error loading Side Panel:", err);
+        const feedbackBtn = document.getElementById("submit-feedback");
         feedbackBtn.disabled = true;
-        feedbackBtn.innerText = "Error loading host info";
+        feedbackBtn.innerText = "Error loading user info";
       }
     };
   </script>
