@@ -105,64 +105,53 @@
       height: 100%;
       margin: 0;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
+      background-color: #f9f9f9;
       font-family: Arial, sans-serif;
     }
 
-    button {
-      margin: 8px 0;
-      padding: 10px 20px;
+    #submit-feedback {
+      background-color: #6a0dad; /* Purple */
+      color: white;
+      border: none;
+      padding: 12px 24px;
       font-size: 16px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    #submit-feedback:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
+    #submit-feedback:hover {
+      background-color: #580b9e; /* Darker purple on hover */
     }
   </style>
 </head>
 
 <body>
-  <div>This is the add-on Side Panel. Only you can see this.</div>
-  
+  <!-- ✅ Only one button now -->
   <button id="submit-feedback">Submit Feedback</button>
-  
+
   <script>
     document.body.onload = async () => {
-      try {
-        // ✅ Initialize the Meet SDK session and side panel client
-        const { session, sidePanelClient } = await helloWorld.setUpAddon();
+      const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-        // ✅ Get meeting info
-        const meetingInfo = await sidePanelClient.getMeetingInfo();
-        const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
-        console.log("Meeting Info:", meetingInfo);
-        console.log("Constructed Meet URL:", meetUrl);
+      // ✅ Get meeting info
+      const meetingInfo = await sidePanelClient.getMeetingInfo();
 
-        // ✅ Get current user from session
-        const currentUser = session?.user;  // contains email, displayName, etc.
-        console.log("Current Signed-in User:", currentUser);
+      // ✅ Construct the Meet URL manually
+      const meetUrl = `https://meet.google.com/${meetingInfo.meetingCode}`;
 
-        // ✅ Feedback button reference
-        const feedbackBtn = document.getElementById("submit-feedback");
+      console.log("Current Meet URL:", meetUrl, "MeetingInfo:", meetingInfo);
 
-        // Just show current user for now
-        if (currentUser) {
-          feedbackBtn.innerText = `Signed in as: ${currentUser.email}`;
-        } else {
-          feedbackBtn.disabled = true;
-          feedbackBtn.innerText = "User info not available";
-        }
-
-      } catch (err) {
-        console.error("Error loading Side Panel:", err);
-        const feedbackBtn = document.getElementById("submit-feedback");
-        feedbackBtn.disabled = true;
-        feedbackBtn.innerText = "Error loading user info";
+      // ✅ Submit Feedback button
+      const feedbackBtn = document.getElementById("submit-feedback");
+      if (feedbackBtn) {
+        feedbackBtn.addEventListener("click", () => {
+          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
+          console.log("Opening Feedback Form with:", targetUrl);
+          window.open(targetUrl, "_blank");
+        });
       }
     };
   </script>
