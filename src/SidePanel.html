@@ -62,30 +62,31 @@
 <body style="width: 100%; height: 100%; margin: 0">
   <div>This is the add-on Side Panel. Only you can see this.</div>
   
+  <!-- Buttons -->
   <button id="start-activity">Launch Activity in Main Stage</button>
   <button id="open-passive">Open Passive Referral</button>
 
   <script>
-document.body.onload = async () => {
-  // ✅ Destructure session + client
-  const { session, sidePanelClient } = await helloWorld.setUpAddon();
+    document.body.onload = async () => {
+      // ✅ Get session + client
+      const { session, sidePanelClient } = await helloWorld.setUpAddon();
 
-  // ✅ Get meet details from sidePanelClient (NOT session)
-  const meetDetails = await sidePanelClient.getMeetDetails();
-  const meetUrl = meetDetails.meetingUri;
+      // ✅ Get meeting info (correct method)
+      const meetingInfo = await sidePanelClient.getMeetingInfo();
+      const meetUrl = meetingInfo.meetingUri;
 
-  console.log("Current Google Meet URL:", meetUrl);
+      console.log("Current Google Meet URL:", meetUrl);
 
-  const passiveBtn = document.getElementById("open-passive");
-  if (passiveBtn) {
-    passiveBtn.addEventListener("click", () => {
-      const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
-      console.log("Opening Passive Referral with:", targetUrl);
-      window.open(targetUrl, "_blank");
-    });
-  }
-};
-</script>
-
+      // Passive Referral button
+      const passiveBtn = document.getElementById("open-passive");
+      if (passiveBtn) {
+        passiveBtn.addEventListener("click", () => {
+          const targetUrl = `https://passivereferral.com/?meetUrl=${encodeURIComponent(meetUrl)}`;
+          console.log("Opening Passive Referral with:", targetUrl);
+          window.open(targetUrl, "_blank");
+        });
+      }
+    };
+  </script>
 </body>
 </html>
